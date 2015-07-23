@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table>
+        <thead>
+            <tr>
+                <th>Gift name</th>
+                <th>Price</th>
+                <th />
+            </tr>
+        </thead>
+        <tbody id="grid1" data-bind='foreach: gifts'>
+            <tr>
+                <td><input data-bind='value: name' /></td>
+                <td><input data-bind='value: price' /></td>
+            </tr>
+        </tbody>
+    </table>
+
+<input type="button" data-bind="click: refresh" name="OK" id="OK" value="OK"/>
+
+
+<script>
+    
+
+    var ViewModel = function () {
+        var self = this;
+        self.count = 1;
+        self.gifts = ko.observable();
+        self.refresh = function () {
+            $.post('/Home/Test', function (allData) {
+                self.gifts(allData);
+            });
+        };
+    };
+    var viewModel = new ViewModel();
+
+    ko.applyBindings(viewModel);
+    debugger;
+</script>
